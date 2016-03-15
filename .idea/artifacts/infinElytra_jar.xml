@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="infinElytra:jar">
+    <output-path>$USER_HOME$/dev/devServer/plugins</output-path>
+    <root id="archive" name="infinElytra.jar">
+      <element id="module-output" name="infinElytra" />
+    </root>
+  </artifact>
+</component>
