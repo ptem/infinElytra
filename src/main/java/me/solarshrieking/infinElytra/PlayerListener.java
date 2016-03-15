@@ -22,51 +22,48 @@ public class PlayerListener implements Listener {
         this.plugin = plugin;
     }
 
-
-
     @EventHandler
-    public void elytraEvent(EntityToggleGlideEvent glideEvent){
+    public void elytraEvent(EntityToggleGlideEvent glideEvent) {
         Entity entity = glideEvent.getEntity();
         if (entity instanceof Player) {
 
             final Player player = (Player) entity;
 
-            if (!player.isGliding()){
+            if (!player.isGliding()) {
                 Bukkit.getScheduler().cancelTask(taskID);
-            }else
+            } else if (player.isGliding()) {
 
-            if (player.isGliding()){
-
-                        double x = player.getVelocity().getX();
-                        final double y = player.getVelocity().getY();
-                        double z = player.getVelocity().getZ();
+                double x = player.getVelocity().getX();
+                final double y = player.getVelocity().getY();
+                double z = player.getVelocity().getZ();
 
 
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                double nY = player.getVelocity().getY();
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        double nY = player.getVelocity().getY();
 
-                                if (y > 0) {
+                        if (y > 0) {
 
-                                    if (nY > y) {
-                                        double newY = (nY-y)+ y;
-                                        //player.sendMessage(ChatColor.GREEN + "new Velocity is INCREASING! Current Velocity" + player.getVelocity().getY());
-                                        Vector newVelo = new Vector(x, newY, z);
-                                        player.setVelocity(newVelo);
-                                        //player.sendMessage("Setting Y Velocity to: " + newY);
+                            if (nY > y) {
+                                double newY = (nY - y) + y;
+                                //player.sendMessage(ChatColor.GREEN + "new Velocity is INCREASING! Current Velocity" + player.getVelocity().getY());
+                                Vector newVelo = new Vector(x, newY, z);
+                                player.setVelocity(newVelo);
+                                //player.sendMessage("Setting Y Velocity to: " + newY);
 
-                                    } else if (nY < y) {
-                                        //player.sendMessage(ChatColor.RED + "Velocity is DECREASING! Current Velocity" + player.getVelocity().getY());
 
-                                    } else if (nY == y) {
-                                        //player.sendMessage(ChatColor.GOLD + "VELOCITY IS THE SAME! Current Velocity" + player.getVelocity().getY());
-                                    }
-                                }
+                            } else if (nY < y) {
+                                //player.sendMessage(ChatColor.RED + "Velocity is DECREASING! Current Velocity" + player.getVelocity().getY());
+
+                            } else if (nY == y) {
+                                //player.sendMessage(ChatColor.GOLD + "VELOCITY IS THE SAME! Current Velocity" + player.getVelocity().getY());
                             }
-                        }, 5L);
+                        }
+                    }
+                }, 20L);
 
-            } else if (!player.isGliding()){
+            } else if (!player.isGliding()) {
                 //player.sendMessage("You're not gliding!");
                 Bukkit.getScheduler().cancelTask(taskID);
             }
